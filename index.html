@@ -1,1 +1,95 @@
-"Hello World"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>ExpressIoT - Howto</title>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://bramp.github.io/js-sequence-diagrams/js/sequence-diagram-min.js"></script>
+</head>
+<body>
+<div class="page-header">
+  <h1>ExpressIoT <small>Quick Howto</small></h1>
+</div>
+
+<div class="container">
+<div class="row">
+  <div class="col-md-8">
+		<div class="steps-headers">
+		<ul class="nav nav-tabs nav-steps">
+			<li class="step">
+				<a href="#register-tab" data-toggle="tab">Register</a>
+			</li>
+			<li class="step">
+				<a href="#service-tab" data-toggle="tab">Service</a>
+			</li>
+			<li class="step">
+				<a href="#client-tab" data-toggle="tab">IoT Clients</a>
+			</li>
+		</ul>
+		</div>
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="register-tab">
+				<h3>Register Your Application with Social Account</h3>
+				<div class="diagram-register">
+					Social User->expressIoT.azurewebsites.net: Authorize(sid)\n Authorize expressIoT to access \n {Twitter,Facebook,Google,Linkedin} 
+					expressIoT.azurewebsites.net->Social Provider: OAuth1/2
+					Social Provider->>expressIoT.azurewebsites.net: {profile,sid,stoken,ssecret}
+					expressIoT.azurewebsites.net->>Social User: {profile}
+					Social User->expressIoT.azurewebsites.net: setHostname(hostname)
+					expressIoT.azurewebsites.net->>Social User: {secret,token}
+				</div>
+				<script>
+					$(".diagram-register").sequenceDiagram();
+				</script>
+
+				<h4>Terms</h4>
+				<ol>
+					<li>sid: </li>
+					<li>stoken: </li>
+					<li>ssecret: </li>
+					<li>token: </li>
+					<li>secret: </li>					
+				</ol>
+			</div>
+			<div class="tab-pane fade" id="service-tab">
+				<h3>Service Goes Online</h3>
+				<div class="diagram-QQ">					
+					Social User->Service Host: deploy()
+					Social User->Service Host: Authorize(sid)\n to get {accessToken,accessSecret}
+					Service Host->Social Provider: OAuth1/2
+					Social Provider->>Service Host: {profile,sid,accessToken,accessSecret}
+					Service Host->expressIoT.azurewebsites.net: online(sid,hostname,ip,accessToken,accessSecret)
+					expressIoT.azurewebsites.net->>Service Host: {token, satellites}
+				</div>
+				<script>
+					$(".diagram-QQ").sequenceDiagram();
+				</script>
+			</div>
+			<div class="tab-pane fade" id="client-tab">
+				<h3>Clients</h3>
+				
+			</div>
+		</div>  
+  </div>
+  </div>
+</div>
+</body>
+</html>
